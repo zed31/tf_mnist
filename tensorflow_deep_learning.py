@@ -124,7 +124,7 @@ class MNISTEngine:
         """
             Run a batch test using `epoch` epoch units
             :param epoch_size: The number of epoch training
-            :param batch_size: The size of one training 
+            :param batch_size: The size of one training
         """
         with tf.Session() as sess:
             sess.run(tf.global_variables_initializer())
@@ -133,14 +133,15 @@ class MNISTEngine:
                 mnist_example_nbr = int(self.mnist.train.num_examples/batch_size)
                 for _ in range(0, mnist_example_nbr):
                     input_batch, label_batch = self.mnist.train.next_batch(batch_size)
-                    _, c = sess.run(
-                            fetches=[self.optimizer, self.loss], 
-                            feed_dict={self.mnist_model.placeholder_in: input_batch, self.mnist_model.placeholder_labels: label_batch})
-                    epoch_loss += c
+                    _, loss_range = sess.run(
+                        fetches=[self.optimizer, self.loss], 
+                        feed_dict={self.mnist_model.placeholder_in: input_batch, self.mnist_model.placeholder_labels: label_batch})
+                    epoch_loss += loss_range
                 print('Epoch', epoch, 'completed out of', epoch_size, 'loss', epoch_loss)
             correct = tf.equal(tf.argmax(self.prediction_output, 1), tf.argmax(self.mnist_model.placeholder_labels, 1))
             accuracy = tf.reduce_mean(tf.cast(correct, tf.float32))
-            print('Accuracy:', accuracy.eval({self.mnist_model.placeholder_in: self.mnist.test.images, self.mnist_model.placeholder_labels: self.mnist.test.labels}))
+            accuracy_eval = accuracy.eval(feed_dict={self.mnist_model.placeholder_in: self.mnist.test.images, self.mnist_model.placeholder_labels: self.mnist.test.labels})
+            print('Accuracy:', accuracy_eval)
 
 
 engine = MNISTEngine()
