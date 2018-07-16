@@ -72,6 +72,10 @@ network_tensor = conv_2d(incoming=network_tensor,
                         nb_filter=64, 
                         filter_size=3, 
                         activation='relu')
+network_tensor = conv_2d(incoming=network_tensor, 
+                        nb_filter=64, 
+                        filter_size=3, 
+                        activation='relu')
 #Will add another conv2d if there are any imprecision inside the training
 network_tensor = max_pool_2d(incoming=network_tensor, kernel_size=2)
 network_tensor = fully_connected(incoming=network_tensor, 
