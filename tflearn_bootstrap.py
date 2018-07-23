@@ -4,6 +4,21 @@ from tflearn.layers.core import input_data, dropout, fully_connected
 from tflearn.layers.estimator import regression
 import tflearn.datasets.mnist as mnist
 
+"""
+    This script is used to make a simple convolutional neural network
+    to use the MNIST dataset, it's composed of:
+
+    - One input data of 28x28x1 pixels
+    - One conv2d layer of 32 filters with a 2x2 kernel size
+    - One max pooling with 2 strides of 2x2 size
+    - One conv2d layer of 64 filters with a 2x2 kernel size
+    - One max pooling with 2 strides of 2x2 size
+    - One fully connected layer of 1024 neurons
+    - One fully connected layer of 10 neurons
+
+    The regression used is the adam optimizer with the cross entropy.
+"""
+
 training_images, training_label, test_X, test_Y = mnist.load_data(one_hot=True)
 
 training_images = training_images.reshape([-1, 28, 28, 1])

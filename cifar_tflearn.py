@@ -58,7 +58,7 @@ image_augmentation.add_random_flip_leftright()
 image_augmentation.add_random_rotation(max_angle=25.)
 
 """
-    Then we create our network and our convolutional layer, first, we declare our input_data
+    Then we create our network and our convolutional layer
 """
 network_tensor = input_data(shape=[None, 32, 32, 3], 
                             data_preprocessing=image_preprocessing, 
@@ -76,7 +76,6 @@ network_tensor = conv_2d(incoming=network_tensor,
                         nb_filter=64, 
                         filter_size=3, 
                         activation='relu')
-#Will add another conv2d if there are any imprecision inside the training
 network_tensor = max_pool_2d(incoming=network_tensor, kernel_size=2)
 network_tensor = fully_connected(incoming=network_tensor, 
                                 n_units=512, 
